@@ -27,8 +27,8 @@ jobs:
             python3-setuptools python3-wheel \
             xz-utils file
 
-      - name: Install west
-        run: pip install west
+      - name: Install west and build dependencies
+        run: pip install west jsonschema
 
       - name: Initialize Zephyr workspace
         run: |

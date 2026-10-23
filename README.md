@@ -70,6 +70,28 @@ The test script checks healthy status, fault injection, fault status, fault clea
 
 **Verified milestone:** all five host-side automated tests passed on the development board.
 
+## Unit Tests
+
+The health-monitor logic is tested using Zephyr ztest on the `native_sim` target.
+
+Run the tests:
+
+```bash
+source ~/zephyr-venv/bin/activate
+cd ~/zephyrproject
+west build -p always -b native_sim ~/embedded-health-monitor/tests/unit -d ~/embedded-health-monitor/build-unit
+west build -t run -d ~/embedded-health-monitor/build-unit
+```
+
+Unit-test coverage:
+- Initial state is healthy
+- Recording a fault changes the health state
+- Multiple faults are counted
+- Clearing faults restores the healthy state
+
+**Verified:** 4/4 ztest cases passed.
+
+
 ## Project Status
 
 This is an incremental embedded systems learning project. Planned improvements include RTOS task separation, C unit tests with Zephyr ztest, improved counter synchronization, and expanded fault scenarios.

@@ -54,5 +54,20 @@ ZTEST(health_monitor, test_clearing_faults_restores_healthy_state)
                   "Fault count should reset to zero");
 }
 
+ZTEST(health_monitor, test_fault_counter_saturates_at_maximum)
+{
+    struct health_monitor monitor;
+
+    health_monitor_init(&monitor);
+    monitor.fault_count = UINT32_MAX;
+
+    health_monitor_record_fault(&monitor);
+
+    zassert_equal(health_monitor_fault_count(&monitor), UINT32_MAX,
+                  "Fault counter must not wrap around");
+    zassert_false(health_monitor_is_healthy(&monitor),
+                  "Monitor must remain unhealthy at maximum count");
+}
+
 ZTEST_SUITE(health_monitor, NULL, NULL, NULL, NULL, NULL);
 

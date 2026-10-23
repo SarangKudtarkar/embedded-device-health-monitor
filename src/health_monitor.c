@@ -7,7 +7,9 @@ void health_monitor_init(struct health_monitor *monitor)
 
 void health_monitor_record_fault(struct health_monitor *monitor)
 {
-    monitor->fault_count++;
+    if (monitor->fault_count < UINT32_MAX) {
+        monitor->fault_count++;
+    }
 }
 
 void health_monitor_clear_faults(struct health_monitor *monitor)

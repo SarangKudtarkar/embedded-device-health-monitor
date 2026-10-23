@@ -141,3 +141,18 @@ Record the actual results from each test run. Do not describe tests as passing u
 
 This is an incremental embedded systems learning project. Planned improvements include RTOS task separation, C unit tests with Zephyr ztest, improved counter synchronization, and expanded fault scenarios.
 
+## Latest Verification Results
+
+**Verified on the current development version:**
+
+- Zephyr `native_sim` unit tests: **5 passed, 0 failed**
+- Python serial hardware-in-the-loop checks: **7 passed**
+- Board serial connection: tested at 115200 baud
+- Monitoring thread: report counter increases over time
+- Health state: fault injection and clearing verified
+- Fault counter: overflow protection covered by a unit test
+
+The unit tests exercise the health-monitor C module in isolation. The Python tests communicate with the physical development board through its serial shell.
+
+These results apply to the version tested; rerun both test suites after subsequent code changes.
+

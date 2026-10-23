@@ -156,3 +156,25 @@ The unit tests exercise the health-monitor C module in isolation. The Python tes
 
 These results apply to the version tested; rerun both test suites after subsequent code changes.
 
+## System Architecture
+
+```mermaid
+flowchart TD
+    A[Host PC] <-->|USB CDC Serial| B[Zephyr Serial Shell]
+    B --> C[Health Monitor Commands]
+    C --> D[Health Monitor Module]
+    E[Periodic Monitoring Thread] --> F[Monitoring Statistics]
+    C --> F
+    D --> G[Health State and Fault Counter]
+    H[Python Hardware-in-the-Loop Tests] <-->|USB Serial Commands and Responses| A
+    I[C Unit Tests - native_sim] --> D
+```
+
+### Main Components
+
+- **Zephyr RTOS firmware:** Runs on the Shrike Lite RP2040.
+- **Monitoring thread:** Periodically updates monitoring statistics.
+- **Health monitor module:** Tracks health state and fault counts.
+- **Serial shell:** Provides commands for inspecting and simulating device faults.
+- **Automated tests:** C unit tests validate the health module, while Python hardware-in-the-loop tests verify the running firmware over USB serial.
+

@@ -91,6 +91,51 @@ Unit-test coverage:
 
 **Verified:** 4/4 ztest cases passed.
 
+## Testing
+
+### Zephyr Unit Tests
+
+The health-monitor logic is tested using Zephyr ztest on `native_sim`.
+
+Run the tests:
+
+```bash
+source ~/zephyr-venv/bin/activate
+cd ~/zephyrproject
+west build -p always -b native_sim ~/embedded-health-monitor/tests/unit -d ~/embedded-health-monitor/build-unit
+west build -t run -d ~/embedded-health-monitor/build-unit
+```
+
+The four unit tests verify:
+- Initial healthy state
+- Fault recording
+- Multiple fault counting
+- Fault clearing
+
+### Python Hardware-in-the-Loop Tests
+
+The Python test suite communicates with the physical board through USB serial using PySerial.
+
+It verifies:
+- Healthy status
+- Fault injection and fault status
+- Fault clearing and counter reset
+- Report counter increases over time
+- Uptime increases between status requests
+
+Run on Windows with the board's serial port available and PuTTY closed:
+
+```powershell
+python C:\Users\Public\test_health_monitor.py
+```
+
+The test script currently expects `COM4` at 115200 baud. Update its `PORT` setting if Windows assigns another port.
+
+### Verification Notes
+
+Record the actual results from each test run. Do not describe tests as passing unless they have been run successfully against the current firmware.
+
+
 
 ## Project Status
 
